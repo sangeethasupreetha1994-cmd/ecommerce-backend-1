@@ -44,10 +44,10 @@ app.use("/analytics", analyticsRoutes);
 dbConnection();
 
 // SERVER
-app.listen(process.env.port, () => {
+app.listen(process.env.PORT, () => {
 
     console.log(
-        `Server is running on port ${process.env.port}`
+        `Server is running on port ${process.env.PORT}`
     );
 
 });
