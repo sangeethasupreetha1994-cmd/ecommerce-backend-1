@@ -25,9 +25,19 @@ require("./routes/orderRoutes");
 const analyticsRoutes =
 require("./routes/analyticsRoutes");
 
-app.use(cors());
+
+// CORS
+app.use(cors({
+    origin: [
+        "http://localhost:5173",
+        "https://your-netlify-site.netlify.app"
+    ],
+    credentials: true,
+}));
+
 
 app.use(express.json());
+
 
 // API ROUTES
 app.use("/auth", authenticationRoutes);
@@ -40,8 +50,10 @@ app.use("/orders", orderRoutes);
 
 app.use("/analytics", analyticsRoutes);
 
+
 // DATABASE
 dbConnection();
+
 
 // SERVER
 app.listen(process.env.PORT, () => {
@@ -51,4 +63,3 @@ app.listen(process.env.PORT, () => {
     );
 
 });
-
