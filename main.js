@@ -14,7 +14,7 @@ require("./config/dbConnection");
 app.use(cors({
     origin: [
         "http://localhost:5173",
-        "https://your-netlify-site.netlify.app"
+        "https://mern-stack-ecommerce-1.netlify.app"
     ],
     methods: ["GET", "POST", "PUT", "DELETE"],
     credentials: true,
