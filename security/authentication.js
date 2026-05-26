@@ -15,33 +15,54 @@ const registerUser = async (req, res) => {
 
     try {
 
+        // CHECK EMAIL
         const emailCheck =
         await userModel.findOne({ email });
 
         if(emailCheck){
+
             return res.status(400).json({
-                message:
-                "User already exists"
+                message: "User already exists"
             });
+
         }
 
+        // HASH PASSWORD
         const hashedPassword =
         await bcrypt.hash(password, 10);
 
+        // CREATE USER
         const user =
         await userModel.create({
+
             username,
             email,
             password: hashedPassword
+
         });
 
-        res.status(201).json(user);
+        // RESPONSE
+        res.status(201).json({
+
+            message: "Registration Successful",
+
+            user: {
+                id: user._id,
+                username: user.username,
+                email: user.email,
+                role: user.role
+            }
+
+        });
 
     } catch (err) {
+
+        console.log(err);
 
         res.status(500).json({
             message: "Internal Server Error"
         });
+
     }
 };
 
@@ -55,16 +76,19 @@ const loginUser = async (req, res) => {
 
     try {
 
+        // FIND USER
         const user =
         await userModel.findOne({ email });
 
         if(!user){
+
             return res.status(404).json({
-                message:
-                "User not found"
+                message: "User not found"
             });
+
         }
 
+        // CHECK PASSWORD
         const passwordMatch =
         await bcrypt.compare(
             password,
@@ -72,13 +96,16 @@ const loginUser = async (req, res) => {
         );
 
         if(!passwordMatch){
+
             return res.status(401).json({
-                message:
-                "Invalid Password"
+                message: "Invalid Password"
             });
+
         }
 
+        // GENERATE TOKEN
         const token = jwt.sign(
+
             {
                 userId: user._id,
                 email: user.email,
@@ -90,18 +117,33 @@ const loginUser = async (req, res) => {
             {
                 expiresIn: "24h"
             }
+
         );
 
+        // RESPONSE
         res.status(200).json({
+
             message: "Login Successful",
-            token
+
+            token,
+
+            user: {
+                id: user._id,
+                username: user.username,
+                email: user.email,
+                role: user.role
+            }
+
         });
 
     } catch (err) {
 
+        console.log(err);
+
         res.status(500).json({
             message: "Internal Server Error"
         });
+
     }
 };
 
