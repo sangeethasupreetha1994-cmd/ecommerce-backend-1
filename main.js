@@ -9,6 +9,21 @@ const cors = require("cors");
 const dbConnection =
 require("./config/dbConnection");
 
+
+// CORS
+app.use(cors({
+    origin: [
+        "http://localhost:5173",
+        "https://your-netlify-site.netlify.app"
+    ],
+    methods: ["GET", "POST", "PUT", "DELETE"],
+    credentials: true,
+}));
+
+
+app.use(express.json());
+
+
 // ROUTES
 const authenticationRoutes =
 require("./routes/authenticationRoutes");
@@ -24,19 +39,6 @@ require("./routes/orderRoutes");
 
 const analyticsRoutes =
 require("./routes/analyticsRoutes");
-
-
-// CORS
-app.use(cors({
-    origin: [
-        "http://localhost:5173",
-        "https://your-netlify-site.netlify.app"
-    ],
-    credentials: true,
-}));
-
-
-app.use(express.json());
 
 
 // API ROUTES
