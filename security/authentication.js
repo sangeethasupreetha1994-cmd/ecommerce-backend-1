@@ -4,6 +4,7 @@ const jwt = require("jsonwebtoken");
 
 const bcrypt = require("bcryptjs");
 
+
 // REGISTER
 const registerUser = async (req, res) => {
 
@@ -66,6 +67,7 @@ const registerUser = async (req, res) => {
     }
 };
 
+
 // LOGIN
 const loginUser = async (req, res) => {
 
@@ -112,7 +114,7 @@ const loginUser = async (req, res) => {
                 role: user.role
             },
 
-            process.env.jwt_secret,
+            process.env.JWT_SECRET,
 
             {
                 expiresIn: "24h"
@@ -146,6 +148,7 @@ const loginUser = async (req, res) => {
 
     }
 };
+
 
 module.exports = {
     registerUser,
